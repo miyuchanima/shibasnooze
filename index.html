@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snooze Shiba ($SNOOZE) | The Laziest Pump</title>
+
+  <style>
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0c0f16;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    /* INTRO SCREEN */
+    #introScreen {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: #0c0f16;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999999;
+      animation: fadeOut 2.5s ease forwards;
+    }
+
+    @keyframes fadeOut {
+      0% { opacity: 1; }
+      70% { opacity: 1; }
+      100% { opacity: 0; visibility: hidden; }
+    }
+
+    .intro-logo {
+      width: 220px;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* HEADER */
+    header {
+      padding: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0,0,0,0.45);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 9999;
+      backdrop-filter: blur(12px);
+      overflow: hidden; /* FIX FOR CUT-OFF NAV */
+    }
+
+    nav {
+      padding-right: 20px; /* Prevent clipping on right side */
+    }
+
+    .logo-wrap {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-wrap img {
+      width: 48px;
+      border-radius: 50%;
+    }
+
+    header h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #ffe56a;
+      text-shadow: 0 3px 8px rgba(255,229,106,0.7);
+    }
+
+    nav a {
+      color: #fff;
+      margin-left: 16px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: 0.3s;
+    }
+    nav a:hover { color: #ffe56a; }
+
+    /* MOBILE */
+    @media (max-width: 650px) {
+      header {
+        flex-direction: column;
+        gap: 8px;
+        padding-bottom: 14px;
+      }
+      nav {
+        padding-right: 0;
+      }
+      nav a {
+        margin: 0 10px;
+      }
+    }
+
+    /* HERO */
+    .hero {
+      padding-top: 180px;
+      text-align: center;
+      padding-bottom: 120px;
+      margin: auto;
+      max-width: 95%;
+    }
+
+    .hero img {
+      width: 220px;
+      border-radius: 50%;
+      margin-bottom: 20px;
+      box-shadow: 0 0 30px rgba(255,229,106,0.3);
+    }
+
+    .hero h2 {
+      font-size: 42px;
+      font-weight: 700;
+    }
+
+    .hero p {
+      font-size: 18px;
+      max-width: 600px;
+      margin: 20px auto;
+      opacity: 0.9;
+    }
+
+    @media (max-width: 600px) {
+      .hero h2 { font-size: 32px; }
+      .hero p { font-size: 16px; }
+    }
+
+    .btn {
+      background: #ffe56a;
+      padding: 12px 28px;
+      border-radius: 30px;
+      color: #000;
+      font-weight: 700;
+      display: inline-block;
+      margin-top: 18px;
+      transition: 0.3s;
+      text-decoration: none;
+    }
+    .btn:hover { transform: scale(1.07); }
+
+    /* SECTIONS */
+    .section {
+      padding: 90px 10%;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      .section { padding: 70px 7%; }
+    }
+
+    .tokenomics-grid,
+    .social-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 35px;
+      margin-top: 40px;
+    }
+
+    @media (max-width: 550px) {
+      .tokenomics-grid,
+      .social-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .box,
+    .social-box {
+      padding: 25px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px;
+      transition: 0.3s;
+    }
+
+    .box:hover,
+    .social-box:hover {
+      transform: translateY(-6px);
+      border-color: #ffe56a;
+    }
+
+    /* CONTRACT BOX */
+    .contract-box {
+      margin-top: 30px;
+      padding: 18px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 12px;
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .contract-box code {
+      font-size: 16px;
+      user-select: all;
+    }
+
+    .copy-btn {
+      background: #ffe56a;
+      border: none;
+      padding: 8px 14px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .copy-btn:hover { transform: scale(1.05); }
+
+    .social-box {
+      text-decoration: none;
+      color: #fff;
+      text-align: center;
+    }
+
+    .social-box img {
+      width: 50px;
+      margin-bottom: 12px;
+    }
+
+    /* FLOATING SHIBA */
+    .floating-shiba {
+      position: fixed;
+      right: -260px;
+      bottom: 40px;
+      width: 230px;
+      opacity: 0.85;
+      transition: transform 1s ease-out;
+    }
+
+    @media(max-width: 600px){
+      .floating-shiba {
+        width: 150px;
+        right: -180px;
+      }
+    }
+
+    /* FOOTER */
+    footer {
+      padding: 40px;
+      text-align: center;
+      background: rgba(0,0,0,0.4);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- INTRO -->
+  <div id="introScreen">
+    <img class="intro-logo" src="snooze_shiba_cover.png" alt="Intro Logo">
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <div class="logo-wrap">
+      <img src="snooze_shiba_logo.jpg" alt="Snooze Shiba Logo">
+      <h1>Snooze Shiba</h1>
+    </div>
+    <nav>
+      <a href="#about">About</a>
+      <a href="#tokenomics">Tokenomics</a>
+      <a href="#buy">Buy</a>
+     <!-- <a href="#charts">Charts</a> -->
+      <a href="#socials">Socials</a>
+    </nav>
+  </header>
+
+  <!-- HERO -->
+  <section class="hero">
+    <img src="snooze_shiba_logo.jpg" alt="Snooze Shiba Main Logo">
+    <h2>The Laziest Shiba Inu on the Blockchain</h2>
+    <p>
+      $SNOOZE sleeps through alarms...  
+      But <b>wakes up to pump your bags.</b>  
+      A meme token so sleepy it's unstoppable.
+    </p>
+    <a class="btn" href="#buy">Buy $SNOOZE</a>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="section" id="about">
+    <h2>What is Snooze Shiba?</h2>
+    <p>
+      Snooze Shiba is a meme-powered crypto token built around a simple truth:  
+      Even the sleepiest dog can send your portfolio to the moon.
+      Whenever $SNOOZE wakes up, price action follows.
+    </p>
+  </section>
+
+  <!-- TOKENOMICS -->
+  <section class="section" id="tokenomics">
+    <h2>Tokenomics</h2>
+
+    <div class="tokenomics-grid">
+      <div class="box">
+        <h3>Total Supply</h3>
+        <p>1,000,000,000 $SNOOZE</p>
+      </div>
+
+      <div class="box">
+        <h3>Taxes</h3>
+        <p>0% Buy • 0% Sell</p>
+      </div>
+
+      <div class="box">
+        <h3>Community Driven</h3>
+        <p>Fair launch. No presale. No team tokens.</p>
+      </div>
+
+      <div class="box">
+        <h3>Utility</h3>
+        <p>Wakey-wakey pumps + nonstop memes.</p>
+      </div>
+    </div>
+
+    <div class="contract-box">
+      <code id="contractAddr">Coming soon ...</code>
+      <button class="copy-btn" onclick="copyContract()">Copy</button>
+    </div>
+  </section>
+
+  <!-- BUY -->
+  <section class="section" id="buy">
+    <h2>Buy $SNOOZE on Pump.fun</h2>
+    <p>The official place to snag your sleepiest memecoin 😴👇</p>
+    <a class="btn" href="#" target="_blank">Buy on Pump.fun</a>
+  </section>
+
+  <!-- CHARTS 
+  <section class="section" id="charts">
+    <h2>Live Charts</h2>
+    <p>Track the sleepy moon mission in real time.</p>
+
+    <iframe width="100%" height="450" frameborder="0"
+      src="https://www.dextools.io/widget-chart/en/ether/pe-light/0x0000000000000000000000000000000000000000?theme=dark">
+    </iframe>
+  </section>
+-->
+  <!-- SOCIALS -->
+  <section class="section" id="socials">
+    <h2>Join the Snooze Squad</h2>
+    <p>Follow the lazy Shiba everywhere 🐶💤</p>
+
+    <div class="social-grid">
+      <a class="social-box" href="https://x.com/SnoozeShiba" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/733/733579.png">
+        <span>Twitter / X</span>
+      </a>
+
+      <a class="social-box" href="https://t.me/" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/2111/2111646.png">
+        <span>Telegram (Coming soon)</span>
+      </a>
+
+      <a class="social-box" href="https://discord.com/" target="_blank">
+        <img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png">
+        <span>Discord (Coming soon)</span>
+      </a>
+    </div>
+  </section>
+
+  <img class="floating-shiba" id="floatingShiba" src="snooze_shiba_cover1.png">
+
+  <footer>
+    <p>© 2025 Snooze Shiba ($SNOOZE). The laziest memecoin on the planet.</p>
+  </footer>
+
+  <script>
+    // FLOATING SHIBA
+    const shiba = document.getElementById('floatingShiba');
+    window.addEventListener('scroll', () => {
+      if (scrollY > 250) shiba.style.transform = "translateX(-260px)";
+      else shiba.style.transform = "translateX(0px)";
+    });
+
+    // COPY CONTRACT
+    function copyContract() {
+      const text = document.getElementById("contractAddr").innerText;
+      navigator.clipboard.writeText(text);
+      alert("Contract copied!");
+    }
+  </script>
+
+</body>
+</html>
